@@ -22,25 +22,31 @@
             </div>
         </ui:define>
         <ui:define name="main_content">
-
             <div class="row">
-               <div class="jumbotron">
-                 <h5>Your Current Shopping Cart</h5>
-                  <h:form>
-                      <h:dataTable  value="#{cardBackingBean.returnProducts()}" var="p">
-                          <h:column>
-                              <b>Product Name:&nbsp;</b>#{p.description}<br/>
-                              <b>Price:&nbsp;</b>#{p.purchaseCost}<br/>
-                              <b>Quantity:&nbsp;</b><br/>
-                              <h:commandButton styleClass="btn btn-default" value="Remove From Cart">        
-                              </h:commandButton>
-                          </h:column>
-                         </h:dataTable>
-                     </h:form>
-                 
-                 <h:commandButton styleClass="btn btn-default" value="Checkout">    
-                 </h:commandButton>
-              </div>
+                <div class="jumbotron">
+                    <h4 align="center">Your Current Shopping Cart
+                        <h:commandButton style="margin-left: 60px;" styleClass="btn btn-default" action="checkout.xhtml" value="Checkout"></h:commandButton></h4>
+   
+                        <h:dataTable  class="table-bordered " style=" padding: 8px;" value="#{cardBackingBean.returnProducts()}" var="item">
+                            <h:column >
+                                <b>Product Name:&nbsp;</b>#{item.product.description}<br/> 
+                                <div class="divider"></div>
+                                <b>Price:&nbsp;</b>#{item.product.purchaseCost}&nbsp;<b>Qty:</b>#{item.product_quantity}<br/>
+                                <b>Change Quantity:&nbsp;</b><h:inputText  id="movie" style="width: 80px;" value="#{item.product_quantity}"><br/>
+                                <!--- Todo here validate user input  -->
+                                </h:inputText>&nbsp;<br/>
+
+                                <b>Total Cost:&nbsp;</b>#{item.product.purchaseCost * item.product_quantity}<br/>
+                                <h:commandButton style="border-radius:10px; text-align: right" class="btn btn-default" value="Update" action="#{item.setProduct_quantity(item.product_quantity)}">        
+                                </h:commandButton>&nbsp;&nbsp;
+                                <h:commandButton style="border-radius:10px; text-align: right" class="btn btn-default" action="#{cardBackingBean.removeProductFromList(item.product.productId)}" value="Remove">        
+                                </h:commandButton>&nbsp;&nbsp;
+                                <br/>
+                            </h:column>
+
+                        </h:dataTable>
+          
+                </div>
             </div>
         </ui:define>
     </ui:composition>
