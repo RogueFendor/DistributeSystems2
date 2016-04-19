@@ -5,7 +5,9 @@
  */
 package ShoppingCartEjb;
 
+import classes.PurchaseItem;
 import entity.Product;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,7 +18,7 @@ import javax.ejb.Local;
 @Local
 public interface ShoppingCartLocal {
     
-    public List<Product>getProducts();
-    public void addProduct(Product product);
-    public void removeProduct();
+    public List<PurchaseItem>getProducts();
+    public void addProduct(PurchaseItem item);
+    public void removeProduct(int product_id);
 }

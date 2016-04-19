@@ -5,6 +5,7 @@
  */
 package ShoppingCartEjb;
 
+import classes.PurchaseItem;
 import entity.Product;
 import java.util.*;
 import javax.ejb.Stateless;
@@ -19,30 +20,33 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ShoppingCart implements ShoppingCartLocal {
 
-    private List<Product>cardProducts = new ArrayList();
+    private List<PurchaseItem>cardProducts = new ArrayList();
+    
+    
     
     @PersistenceContext(unitName = "13029096-ejbPU")
     private EntityManager em;
 
     @Override
-    public List<Product> getProducts() {
+    public List<PurchaseItem> getProducts() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     return cardProducts;
     }
 
     @Override
-    public void addProduct(Product product) {
-      cardProducts.add(product);
-      System.out.println(product.getDescription());
+    public void addProduct(PurchaseItem item) {
+      cardProducts.add(item);
+      System.out.println(item.p.getDescription());
     }
     @Override
-    public void removeProduct() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removeProduct(int product_id) {
+        for(int i=0;i<cardProducts.size();i++){ 
+          if(cardProducts.get(i).getProduct().getProductId()==product_id){
+            cardProducts.remove(i);
+            break;
+          }
+       }  
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
     public void persist(Object object) {
         em.persist(object);
     }
